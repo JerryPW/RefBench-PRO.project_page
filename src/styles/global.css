@@ -24,7 +24,7 @@ html {
 }
 
 :root {
-  --maximum-text-width: 50rem;
+  --maximum-text-width: 60rem;
   --minimum-inline-margin: 1.5rem;
   --actual-inline-margin: max(
     var(--minimum-inline-margin),
@@ -51,3 +51,96 @@ main .katex-display {
   width: max-content;
   margin-inline: auto;
 }
+
+/* ===== RefBench-PRO leaderboard table ===== */
+
+#leaderboardTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.85rem;              /* 整体现代一点的小字号 */
+  background-color: transparent;
+}
+
+#leaderboardTable thead th {
+  padding: 0.75rem 0.75rem;
+  background-color: #f4f4f5;       /* 浅灰表头背景 */
+  color: #3f3f46;                  /* zinc-600 */
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+#leaderboardTable thead tr:first-child th:first-child {
+  border-top-left-radius: 1rem;
+}
+
+#leaderboardTable thead tr:first-child th:last-child {
+  border-top-right-radius: 1rem;
+}
+
+/* 正常数据行：细分隔线 + 统一内边距 */
+#leaderboardTable tbody tr {
+  border-top: 1px solid #e4e4e7;   /* zinc-200 */
+}
+
+#leaderboardTable tbody td {
+  padding: 0.5rem 0.75rem;
+}
+
+/* 斑马线效果（分类行除外） */
+#leaderboardTable tbody tr:nth-child(odd):not(.category-row) td {
+  background-color: #fafafa;       /* zinc-50 */
+}
+
+/* 第一列左对齐，模型名突出一点 */
+#leaderboardTable tbody td:first-child {
+  text-align: left;
+  font-weight: 500;
+  color: #18181b;
+}
+
+#leaderboardTable th:first-child,
+#leaderboardTable td:first-child {
+  text-align: left;
+  font-weight: 500;
+  color: #18181b;
+  min-width: 11rem;          /* 可以自己调，比如 10rem / 12rem */
+  white-space: nowrap;       /* 不自动换行 */
+  padding-left: 1rem;
+}
+
+/* 其它列数字统一对齐 & 等宽数字，看起来更整齐 */
+#leaderboardTable tbody td:not(:first-child) {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 分类行样式：整行灰条 + 全大写小字母 */
+#leaderboardTable tbody tr.category-row td {
+  background-color: #f4f4f5;       /* 比普通行稍深一点 */
+  border-top: 1px solid #d4d4d8;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #52525b;
+}
+
+/* 分类行文本稍微靠左一点 */
+#leaderboardTable tbody tr.category-row td {
+  text-align: left;
+}
+
+/* 链接颜色稍微突出一点 */
+#leaderboardTable a {
+  color: #2563eb;                  /* 类似 Tailwind 的 blue-600 */
+  text-decoration: none;
+}
+
+#leaderboardTable a:hover {
+  text-decoration: underline;
+}
+

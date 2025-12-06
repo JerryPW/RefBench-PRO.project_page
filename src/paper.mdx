@@ -1,34 +1,52 @@
 ---
-title: Research Project Page Template
+title: RefBench-PRO:Perceptual and Reasoning Oriented Benchmark for Referring Expression Comprehension
 authors:
-  - name: Roman Hauksson
-    url: https://roman.technology
-    institution: University of Texas at Dallas
-    notes: ["*", †]
-  - name: Author Two
-    institution: Institution Two
-    notes: ["*", †]
-  - name: Author Three
-    institution: Institution Three
-    notes: ["*"]
-  - name: Author Four
-    institution: Institution Four
-conference: Conference Name
+  - name: Tianyi Gao
+    notes: ["1", "2", "*"]
+  - name: Hao Li
+    notes: ["2", "3", "*"]
+  - name: Han Fang
+    notes: ["2"]
+  - name: Xin Wei
+    notes: ["2"]
+  - name: Xiaodong Dong
+    notes: ["2"]
+  - name: Hongbo Sun
+    notes: ["2"]
+  - name: Ye Yuan
+    notes: ["2"]
+  - name: Zhongjiang He
+    notes: ["2"]
+  - name: Jinglin Xu
+    notes: ["4"]
+  - name: Jingmin Xin
+    notes: ["1", †]
+  - name: Hao Sun
+    notes: ["2", †]
+# conference: Conference Name
 notes:
+  - symbol: "1"
+    text: Xi'an Jiaotong University
+  - symbol: "2"
+    text: Institute of Artificial Intelligence (TeleAI), China Telecom
+  - symbol: "3"
+    text: Shanghai Jiao Tong University
+  - symbol: "4"
+    text: University of Science and Technology Beijing
   - symbol: "*"
-    text: author note one
+    text: Equal Contributions
   - symbol: †
-    text: author note two
+    text: Corresponding Authors
 links:
-  - name: Paper
-    url: https://github.com/RomanHauksson/academic-project-astro-template
-    icon: ri:file-pdf-2-line
   - name: Code
-    url: https://github.com/RomanHauksson/academic-project-astro-template
+    url: https://github.com/TG0110/RefBench-PRO
     icon: ri:github-line
   - name: arXiv
     url: https://github.com/RomanHauksson/academic-project-astro-template
     icon: academicons:arxiv
+  - name: Datasets
+    url: https://huggingface.co/datasets/thisis1go/RefBench-PRO
+    icon: simple-icons:huggingface
 
 # The color theme of the page. Defaults to "device" (the preference set in the user's brower or operating system). Setting this to "light" or "dark" will override the user's preference. This is useful if your figures only look good in one theme.
 theme: device
@@ -57,105 +75,603 @@ import outside from "./assets/outside.mp4";
 import transformer from "./assets/transformer.webp";
 import dogsDiffc from "./assets/dogs-diffc.png"
 import dogsTrue from "./assets/dogs-true.png"
+import benchmark from "./assets/benchmark_table.png"
+import box from "./assets/benchmark_box.png"
 
-<Video src={outside} />
+{/* <Video src={outside} /> */}
+<Figure>
+  <Picture slot="figure" src="../assets/Overview.pdf" alt="Impact of the sparsity-aware algorithm in XGBoost on the Allstate-10K dataset." invertInDarkMode />
+  <Fragment slot="caption">Overview of our RefBench-PRO benchmark and the underlying RefObjects-200k dataset. Starting from 12 million high-resolution images in FineHARD, we construct RefObjects-200k, a challenging referring expression comprehension dataset with 203,985 high-quality instances spanning two core dimensions—perception and reasoning—which are further decomposed into six sub-dimensions. RefBench-PRO then selects 6,000 carefully curated samples from RefObjects-200k, 1,000 per category, to rigorously evaluate the referring expression comprehension capabilities of modern MLLMs.</Fragment>
+</Figure>
 
 <HighlightedSection>
 
 ## Abstract
 
-This is a live demo for a template you can use to create a simple project page for your research paper. See the code for the template and instructions on how to use it yourself [here](https://github.com/RomanHauksson/academic-project-astro-template). It's made with the [Astro web framework](https://astro.build/) and styled with [Tailwind](https://tailwindcss.com/). You write the content in [MDX](https://mdxjs.com/), which enables markdown formatting like **bold**, _italics_, and ~strikethrough~, as well as custom components like <SmallCaps>small caps.</SmallCaps>
+Referring Expression Comprehension (REC) is a vision-language task that localizes a specific image region based on a textual description. Existing REC benchmarks primarily evaluate perceptual capabilities and lack interpretable scoring mechanisms, which cannot reveal the grounding capability of Multi-modal Large Language Model (MLLM) across different cognitive abilities.
+To address this limitation, we introduce RefBench-PRO, a comprehensive  REC benchmark, which decomposes referring expressions into two core dimensions, i.e., perception and reasoning, and further subdivides them into six progressively challenging tasks, such as attribute, position, interaction, commonsense, relation and reject.
+We also develop a fully automated data-generation pipeline that produces diverse referring expressions across these six sub-dimensions. 
+Furthermore, We propose Ref-R1, an RL-based learning scheme, which incorporates Dynamic IoU-based GRPO to improve localization accuracy under increasingly complex reasoning conditions, establishing a stronger baseline for REC. 
+Extensive experiments demonstrate that our RefBench-PRO enables interpretable evaluation of MLLM on referring expression comprehension, presenting greater challenges in both perception and reasoning.
 
 </HighlightedSection>
 
-## Figures
-
-Use the figure component to display images, videos, equations, or any other element, with an optional caption.
-
+## Benchmark Statistic
 <Figure>
-  <Picture slot="figure" src={transformer} alt="Diagram of the transformer deep learning architecture." invertInDarkMode />
-  <Fragment slot="caption">Diagram of the transformer deep learning architecture.</Fragment>
+  <Picture slot="figure" src={benchmark} alt="Impact of the sparsity-aware algorithm in XGBoost on the Allstate-10K dataset." invertInDarkMode />
 </Figure>
 
-If you stored your figures as PDFs, the `Picture` component can convert them into web-friendly images automatically.
-
 <Figure>
-  <Picture slot="figure" src="../assets/allstate-sparsity.pdf" alt="Impact of the sparsity-aware algorithm in XGBoost on the Allstate-10K dataset." invertInDarkMode />
-  <Fragment slot="caption">Impact of the sparsity-aware algorithm in [XGBoost](https://arxiv.org/abs/1603.02754) on the Allstate-10K dataset.</Fragment>
+  <Picture slot="figure" src={box} alt="Impact of the sparsity-aware algorithm in XGBoost on the Allstate-10K dataset." invertInDarkMode />
+  <Fragment slot="caption">Refbench-PRO contains 6,000 pairs distributed across six sub-categories: Attribute, Position, Interaction, Relation, Commonsense, and Rejection. The benchmark features high-resolution images, covers over 1,000 distinct object types, and emphasizes small or marginally visible targets, with an average target object area ratio of 10%. our RefBench-PRO exhibits a broader distribution, with greater emphasis on objects with small relative size. Additionally, our RefBench-PRO produces comparably long descriptions by incorporating discriminative visual cues, achieving higher information density.</Fragment>
 </Figure>
 
-Use the `Comparison` component to compare two elements with an interactive slider. It should work for any component or HTML element, including images, videos, and 3D models.
+## Benchmark Example
 
-<Figure>
-  <Comparison slot="figure" client:idle >
-    <Picture slot="itemOne" src={dogsDiffc} alt="Photo of two dogs running side-by-side in shallow water, lossily compressed using the DiffC algorithm" />
-    <Picture slot="itemTwo" src={dogsTrue} alt="Photo of two dogs running side-by-side in shallow water" />
-  </Comparison>
-  <Fragment slot="caption">A photo of two dogs running side-by-side in shallow water, lossily compressed using the [DiffC algorithm](https://jeremyiv.github.io/diffc-project-page/).</Fragment>
-</Figure>
+import attribute1 from "./assets/bbox/attribute1.jpg"
+import attribute2 from "./assets/bbox/attribute2.jpg"
+import position1 from "./assets/bbox/position1.jpg"
+import position2 from "./assets/bbox/position2.jpg"
+import interaction1 from "./assets/bbox/interaction1.jpg"
+import interaction2 from "./assets/bbox/interaction2.jpg"
+import relation1 from "./assets/bbox/relation1.jpg"
+import relation2 from "./assets/bbox/relation2.jpg"
+import commonsense1 from "./assets/bbox/commonsense1.jpg"
+import commonsense2 from "./assets/bbox/commonsense2.jpg"
+import reject1 from "./assets/bbox/reject1.jpg"
+import reject2 from "./assets/bbox/reject2.jpg"
 
-## Carousels
-
-Carousels are useful for situations in which you'd like to display a collection of visuals without taking up much space and you're okay with the reader not seeing every visual. I created my own carousel component for this template because I wasn't satisfied with the existing carousel libraries; please [file an issue](https://github.com/RomanHauksson/academic-project-astro-template/issues/new) if you run into any bugs!
 
 <Carousel>
   <CarouselSlide>
-    <Picture src={dogsTrue} alt="Photo of two dogs running side-by-side in shallow water" />
+    <div class="flex flex-col items-center gap-2">
+      <Picture
+        src={attribute1}
+        alt="Photo of two dogs running side-by-side in shallow water"
+      />
+      <p class="text-sm text-zinc-600 dark:text-zinc-300 text-center">
+        Attribute: the person wearing a black dress with yellow flowers.
+      </p>
+    </div>
   </CarouselSlide>
   <CarouselSlide>
-    <Picture src={dogsDiffc} alt="Photo of two dogs running side-by-side in shallow water, lossily compressed using the DiffC algorithm" />
+    <div class="flex flex-col items-center gap-2">
+      <Picture
+        src={attribute2}
+        alt="Photo of two dogs running side-by-side in shallow water"
+      />
+      <p class="text-sm text-zinc-600 dark:text-zinc-300 text-center">
+        Attribute: the whiteboard with posters on it.
+      </p>
+    </div>
   </CarouselSlide>
   <CarouselSlide>
-    You can put any element in each carousel slide, not just pictures. Since this text isn't part of a component, it will be _interpreted_ as **Markdown**.
+    <div class="flex flex-col items-center gap-2">
+      <Picture
+        src={position1}
+        alt="Photo of two dogs running side-by-side in shallow water"
+      />
+      <p class="text-sm text-zinc-600 dark:text-zinc-300 text-center">
+        Position: the picture frame next to the black cabinet.
+      </p>
+    </div>
   </CarouselSlide>
   <CarouselSlide>
-    <Picture src={dogsTrue} alt="Photo of two dogs running side-by-side in shallow water" />
+    <div class="flex flex-col items-center gap-2">
+      <Picture
+        src={position2}
+        alt="Photo of two dogs running side-by-side in shallow water"
+      />
+      <p class="text-sm text-zinc-600 dark:text-zinc-300 text-center">
+        Position: the flower basket on the same shelf as the printer.
+      </p>
+    </div>
   </CarouselSlide>
+  <CarouselSlide>
+    <div class="flex flex-col items-center gap-2">
+      <Picture
+        src={interaction1}
+        alt="Photo of two dogs running side-by-side in shallow water"
+      />
+      <p class="text-sm text-zinc-600 dark:text-zinc-300 text-center">
+        Interaction: the eighth person from the left in the line of people.
+      </p>
+    </div>
+  </CarouselSlide>
+  <CarouselSlide>
+    <div class="flex flex-col items-center gap-2">
+      <Picture
+        src={interaction2}
+        alt="Photo of two dogs running side-by-side in shallow water"
+      />
+      <p class="text-sm text-zinc-600 dark:text-zinc-300 text-center">
+        Interaction: the second milk carton to the right of the tall milk box.
+      </p>
+    </div>
+  </CarouselSlide>
+  <CarouselSlide>
+    <div class="flex flex-col items-center gap-2">
+      <Picture
+        src={relation1}
+        alt="Photo of two dogs running side-by-side in shallow water"
+      />
+      <p class="text-sm text-zinc-600 dark:text-zinc-300 text-center">
+        Relation: the chair is placed completely perpendicular to the wall with the picture.
+      </p>
+    </div>
+  </CarouselSlide>
+  <CarouselSlide>
+    <div class="flex flex-col items-center gap-2">
+      <Picture
+        src={relation2}
+        alt="Photo of two dogs running side-by-side in shallow water"
+      />
+      <p class="text-sm text-zinc-600 dark:text-zinc-300 text-center">
+        Relation: the ceramic container with the curtain's color.
+      </p>
+    </div>
+  </CarouselSlide>
+  <CarouselSlide>
+    <div class="flex flex-col items-center gap-2">
+      <Picture
+        src={commonsense1}
+        alt="Photo of two dogs running side-by-side in shallow water"
+      />
+      <p class="text-sm text-zinc-600 dark:text-zinc-300 text-center">
+        Commonsense: the object that can provide information about the scene outside the camera's frame.
+      </p>
+    </div>
+  </CarouselSlide>
+  <CarouselSlide>
+    <div class="flex flex-col items-center gap-2">
+      <Picture
+        src={commonsense2}
+        alt="Photo of two dogs running side-by-side in shallow water"
+      />
+      <p class="text-sm text-zinc-600 dark:text-zinc-300 text-center">
+        Commonsense: the tool used to pick up trash.
+      </p>
+    </div>
+  </CarouselSlide>
+  <CarouselSlide>
+    <div class="flex flex-col items-center gap-2">
+      <Picture
+        src={reject1}
+        alt="Photo of two dogs running side-by-side in shallow water"
+      />
+      <p class="text-sm text-zinc-600 dark:text-zinc-300 text-center">
+        Reject: the black plastic computer monitor that is turned on.
+      </p>
+    </div>
+  </CarouselSlide>
+  <CarouselSlide>
+    <div class="flex flex-col items-center gap-2">
+      <Picture
+        src={reject2}
+        alt="Photo of two dogs running side-by-side in shallow water"
+      />
+      <p class="text-sm text-zinc-600 dark:text-zinc-300 text-center">
+        Reject: the person wearing a blue shirt and blue pants.
+      </p>
+    </div>
+  </CarouselSlide>
+
 </Carousel>
 
-## Two columns
 
-Use the two columns component to display two columns of content. In this example, the first column contains a figure with a YouTube video and the second column contains a figure with an interactive 3D model viewer. By default, they display side by side, but if the screen is narrow enough (for example, on mobile), they're arranged vertically.
 
-<TwoColumns>
-  <Figure slot="left">
-    <YouTubeVideo slot="figure" videoId="wjZofJX0v4M" />
-    <Fragment slot="caption">Take a look at this YouTube video.</Fragment>
-  </Figure>
-  <Figure slot="right">
-    <ModelViewer slot="figure" src="/BoxVertexColors.glb" alt="A cube colored with a rainbow gradient" />
-    <Fragment slot="caption">Now look at this cube, rendered with the `<model-viewer>` web component.</Fragment>
-  </Figure>
-</TwoColumns>
+<section id="leaderboard" class="my-16">
+  <div class="mx-auto px-4 md:px-6">
+    <h2 class="text-2xl md:text-3xl font-semibold text-center mb-6">
+      Leaderboard
+    </h2>
 
-## $\LaTeX$
+    <div class="overflow-x-auto rounded-3xl border border-zinc-200 bg-white shadow-sm">
+      <table class="min-w-full text-xs md:text-sm text-center align-middle" id="leaderboardTable">
+        <thead class="bg-zinc-100 dark:bg-zinc-800">
+          {/* <!-- 第一行表头 --> */}
+          <tr>
+            <th rowspan="2" class="px-2 py-3">Models</th>
+            <th rowspan="2" class="px-2 py-3">Size</th>
+            <th colspan="2" class="px-2 py-3">Overall</th>
+            <th colspan="4" class="px-2 py-3">Visual-cue Perception</th>
+            <th colspan="4" class="px-2 py-3">Compositional Reasoning</th>
+          </tr>
+          {/* <!-- 第二行表头 --> */}
+          <tr>
+            {/* <!-- Overall --> */}
+            <th class="px-2 py-2">Acc<sub>p</sub></th>
+            <th class="px-2 py-2">Acc<sub>o</sub></th>
+            {/* <!-- Visual-cue --> */}
+            <th class="px-2 py-2">Attribute</th>
+            <th class="px-2 py-2">Position</th>
+            <th class="px-2 py-2">Interaction</th>
+            <th class="px-2 py-2">Acc<sub>API</sub></th>
+            {/* <!-- Reasoning --> */}
+            <th class="px-2 py-2">Relation</th>
+            <th class="px-2 py-2">Commonsense</th>
+            <th class="px-2 py-2">Reject</th>
+            <th class="px-2 py-2">Acc<sub>RC</sub></th>
+          </tr>
+        </thead>
 
-You can also add $\LaTeX$ formulas, rendered during the build process using [$\KaTeX$](https://katex.org/) so they're quick to load for visitors of your project page. You can write them inline, like this: $a^2 + b^2 = c^2$. Or, you can write them as a block:
+        <tbody>
+          {/* <!-- 1. Open-vocabulary Grounding Models --> */}
+          <tr class="bg-zinc-50 dark:bg-zinc-900/60">
+            <td colspan="12" class="text-left px-3 py-2 font-semibold">
+              Open-vocabulary Grounding Models
+            </td>
+          </tr>
+          <tr>
+            <td class="px-2 py-1">
+              <a href="https://github.com/FoundationVision/GLEE" target="_blank" class="underline-offset-2 hover:underline">
+                GLEE
+              </a>
+            </td>
+            <td>-</td>
+            <td>36.1</td>
+            <td>31.2</td>
+            <td>48.2</td>
+            <td>38.4</td>
+            <td>34.5</td>
+            <td>40.4</td>
+            <td>31.4</td>
+            <td>27.9</td>
+            <td>7.1</td>
+            <td>29.7</td>
+          </tr>
+          <tr>
+            <td>Grounding DINO L</td>
+            <td>-</td>
+            <td>37.6</td>
+            <td>31.3</td>
+            <td>47.5</td>
+            <td>43.3</td>
+            <td>31.8</td>
+            <td>40.9</td>
+            <td>35.0</td>
+            <td>30.3</td>
+            <td>0.1</td>
+            <td>32.7</td>
+          </tr>
 
-$$
-\int_a^b f(x) dx
-$$
+          {/* <!-- 2. Proprietary MLLMs --> */}
+          <tr class="bg-zinc-50 dark:bg-zinc-900/60">
+            <td colspan="12" class="text-left px-3 py-2 font-semibold">
+              Proprietary MLLMs
+            </td>
+          </tr>
+          <tr>
+            <td>Gemini-2.5-pro</td>
+            <td>-</td>
+            <td>9.6</td>
+            <td>8.0</td>
+            <td>10.4</td>
+            <td>11.5</td>
+            <td>10.8</td>
+            <td>10.9</td>
+            <td>7.2</td>
+            <td>8.2</td>
+            <td>-</td>
+            <td>7.7</td>
+          </tr>
+          <tr>
+            <td>GPT-4o</td>
+            <td>-</td>
+            <td>12.1</td>
+            <td>10.1</td>
+            <td>11.7</td>
+            <td>12.8</td>
+            <td>11.9</td>
+            <td>12.1</td>
+            <td>12.4</td>
+            <td>11.6</td>
+            <td>-</td>
+            <td>12.0</td>
+          </tr>
+          <tr>
+            <td>GPT-5</td>
+            <td>-</td>
+            <td>26.1</td>
+            <td>21.8</td>
+            <td>29.2</td>
+            <td>25.5</td>
+            <td>27.0</td>
+            <td>27.2</td>
+            <td>26.2</td>
+            <td>22.9</td>
+            <td>-</td>
+            <td>24.6</td>
+          </tr>
 
-## Tables
+          {/* <!-- 3. Specialist MLLMs --> */}
+          <tr class="bg-zinc-50 dark:bg-zinc-900/60">
+            <td colspan="12" class="text-left px-3 py-2 font-semibold">
+              Specialist MLLMs
+            </td>
+          </tr>
+          <tr>
+            <td>PaDT</td>
+            <td>3B</td>
+            <td>26.6</td>
+            <td>22.2</td>
+            <td>30.4</td>
+            <td>28.0</td>
+            <td>30.4</td>
+            <td>29.6</td>
+            <td>23.7</td>
+            <td>20.8</td>
+            <td>-</td>
+            <td>22.3</td>
+          </tr>
+          <tr>
+            <td>VLM-R1</td>
+            <td>3B</td>
+            <td>54.4</td>
+            <td>45.3</td>
+            <td>59.0</td>
+            <td>58.0</td>
+            <td>54.1</td>
+            <td>57.0</td>
+            <td>47.8</td>
+            <td>53.2</td>
+            <td>-</td>
+            <td>50.5</td>
+          </tr>
+          <tr>
+            <td>ChatRex</td>
+            <td>7B</td>
+            <td>49.5</td>
+            <td>41.3</td>
+            <td>54.7</td>
+            <td>51.1</td>
+            <td>53.2</td>
+            <td>53.0</td>
+            <td>45.1</td>
+            <td>43.4</td>
+            <td>-</td>
+            <td>44.2</td>
+          </tr>
+          <tr>
+            <td>Migician</td>
+            <td>7B</td>
+            <td>52.3</td>
+            <td>43.6</td>
+            <td>57.3</td>
+            <td>59.7</td>
+            <td>52.8</td>
+            <td>56.6</td>
+            <td>45.4</td>
+            <td>46.1</td>
+            <td>-</td>
+            <td>45.7</td>
+          </tr>
+          <tr>
+            <td>UniVG-R1</td>
+            <td>7B</td>
+            <td>53.0</td>
+            <td>44.2</td>
+            <td>59.4</td>
+            <td>57.2</td>
+            <td>55.1</td>
+            <td>57.2</td>
+            <td>48.3</td>
+            <td>44.9</td>
+            <td>-</td>
+            <td>46.6</td>
+          </tr>
+          <tr>
+            <td>Rex-Thinker</td>
+            <td>7B</td>
+            <td>63.6</td>
+            <td>53.0</td>
+            <td>67.1</td>
+            <td>64.5</td>
+            <td>61.7</td>
+            <td>64.4</td>
+            <td>59.3</td>
+            <td>65.6</td>
+            <td>-</td>
+            <td>62.4</td>
+          </tr>
+          <tr>
+            <td>CogVLM-Grounding</td>
+            <td>17B</td>
+            <td>57.1</td>
+            <td>47.5</td>
+            <td>62.4</td>
+            <td>62.4</td>
+            <td>55.9</td>
+            <td>60.2</td>
+            <td>49.4</td>
+            <td>55.2</td>
+            <td>-</td>
+            <td>52.3</td>
+          </tr>
 
-Add simple tables using [GitHub Flavored Markdown syntax](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/organizing-information-with-tables):
+          {/* <!-- 4. Open-source General MLLMs --> */}
+          <tr class="bg-zinc-50 dark:bg-zinc-900/60">
+            <td colspan="12" class="text-left px-3 py-2 font-semibold">
+              Open-source General MLLMs
+            </td>
+          </tr>
+          <tr>
+            <td>Qwen2-VL</td>
+            <td>7B</td>
+            <td>45.4</td>
+            <td>42.6</td>
+            <td>55.3</td>
+            <td>47.8</td>
+            <td>37.8</td>
+            <td>47.0</td>
+            <td>39.4</td>
+            <td>46.5</td>
+            <td>28.5</td>
+            <td>43.0</td>
+          </tr>
+          <tr>
+            <td>Mimo-VL-RL</td>
+            <td>7B</td>
+            <td>56.3</td>
+            <td>46.9</td>
+            <td>60.9</td>
+            <td>58.4</td>
+            <td>57.3</td>
+            <td>58.9</td>
+            <td>51.8</td>
+            <td>52.9</td>
+            <td>0.1</td>
+            <td>52.4</td>
+          </tr>
+          <tr>
+            <td>Qwen2.5-VL</td>
+            <td>7B</td>
+            <td>57.6</td>
+            <td>48.5</td>
+            <td>61.7</td>
+            <td>63.0</td>
+            <td>58.6</td>
+            <td>61.1</td>
+            <td>49.1</td>
+            <td>55.6</td>
+            <td>3.1</td>
+            <td>52.3</td>
+          </tr>
+          <tr>
+            <td>InternVL3</td>
+            <td>8B</td>
+            <td>20.1</td>
+            <td>20.3</td>
+            <td>24.9</td>
+            <td>18.4</td>
+            <td>22.3</td>
+            <td>21.9</td>
+            <td>19.8</td>
+            <td>15.0</td>
+            <td>21.3</td>
+            <td>17.4</td>
+          </tr>
+          <tr>
+            <td>InternVL3.5</td>
+            <td>8B</td>
+            <td>41.5</td>
+            <td>34.6</td>
+            <td>45.7</td>
+            <td>41.2</td>
+            <td>45.3</td>
+            <td>44.1</td>
+            <td>37.8</td>
+            <td>37.3</td>
+            <td>-</td>
+            <td>37.5</td>
+          </tr>
+          <tr>
+            <td>LLaVA-OneVision-1.5</td>
+            <td>8B</td>
+            <td>50.7</td>
+            <td>42.3</td>
+            <td>54.5</td>
+            <td>54.0</td>
+            <td>48.4</td>
+            <td>52.3</td>
+            <td>48.1</td>
+            <td>48.6</td>
+            <td>-</td>
+            <td>48.3</td>
+          </tr>
+          <tr>
+            <td>Qwen3-VL</td>
+            <td>8B</td>
+            <td>71.4</td>
+            <td>62.2</td>
+            <td>76.6</td>
+            <td>76.1</td>
+            <td>67.3</td>
+            <td>73.3</td>
+            <td>68.9</td>
+            <td>68.3</td>
+            <td>15.8</td>
+            <td>68.6</td>
+          </tr>
+          <tr>
+            <td>Ovis2.5</td>
+            <td>9B</td>
+            <td>61.7</td>
+            <td>51.5</td>
+            <td>65.7</td>
+            <td>63.6</td>
+            <td>59.7</td>
+            <td>63.0</td>
+            <td>58.7</td>
+            <td>61.0</td>
+            <td>-</td>
+            <td>59.9</td>
+          </tr>
+          <tr>
+            <td>GLM-4.1V-Base</td>
+            <td>9B</td>
+            <td>60.1</td>
+            <td>50.1</td>
+            <td>62.9</td>
+            <td>61.0</td>
+            <td>57.7</td>
+            <td>60.5</td>
+            <td>57.0</td>
+            <td>61.9</td>
+            <td>-</td>
+            <td>59.4</td>
+          </tr>
+          <tr>
+            <td>LLaVA-OneVision</td>
+            <td>72B</td>
+            <td>56.5</td>
+            <td>47.1</td>
+            <td>60.1</td>
+            <td>59.4</td>
+            <td>53.7</td>
+            <td>57.7</td>
+            <td>54.2</td>
+            <td>55.0</td>
+            <td>-</td>
+            <td>54.6</td>
+          </tr>
+          <tr>
+            <td>Qwen2.5-VL</td>
+            <td>72B</td>
+            <td>66.7</td>
+            <td>59.5</td>
+            <td>68.6</td>
+            <td>69.1</td>
+            <td>69.4</td>
+            <td>69.1</td>
+            <td>61.6</td>
+            <td>64.8</td>
+            <td>23.6</td>
+            <td>63.2</td>
+          </tr>
+          <tr>
+            <td>InternVL3</td>
+            <td>78B</td>
+            <td>21.8</td>
+            <td>22.3</td>
+            <td>35.0</td>
+            <td>24.9</td>
+            <td>28.2</td>
+            <td>29.4</td>
+            <td>24.3</td>
+            <td>20.8</td>
+            <td>24.8</td>
+            <td>22.5</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
 
-| Model | Accuracy | F1 score | Training time (hours) |
-| :--- | :---: | :---: | :---: |
-| BERT-base | 0.89 | 0.87 | 4.5 |
-| RoBERTa-large | 0.92 | 0.91 | 7.2 |
-| DistilBERT | 0.86 | 0.84 | 2.1 |
-| XLNet | 0.90 | 0.89 | 6.8 |
 
 ## BibTeX citation
 
-Displaying your BibTeX citation in a code block makes it easy to copy and paste.
-
 ```bibtex
-@misc{roman2024academic,
-  author = "{Roman Hauksson}",
-  title = "Academic Project Page Template",
-  year = "2024",
-  howpublished = "\url{https://research-template.roman.technology}",
-}
+coming soon...
 ```
