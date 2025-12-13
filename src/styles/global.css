@@ -62,6 +62,11 @@ main .katex-display {
   background-color: transparent;
 }
 
+#leaderboard .leaderboard-shell {
+  max-width: 100rem;   /* 想多宽写多宽，比如 80rem/90rem */
+  margin-inline: auto; /* 居中 */
+}
+
 #leaderboardTable thead th {
   padding: 0.75rem 0.75rem;
   background-color: #f4f4f5;       /* 浅灰表头背景 */
